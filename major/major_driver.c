@@ -1,8 +1,8 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
-#include <linux/fs.h>
-#include <linux/uaccess.h>
+#include <linux/fs.h>		// file_operations
+#include <linux/uaccess.h>	// copy_to_user()
 
 #define MAJOR_DEV_NAME	"major_dev"
 #define MAJOR_DEV_NUM	200

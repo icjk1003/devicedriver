@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <fcntl.h> // open()
-#include <unistd.h> // write() read()..
-#include <stdlib.h> // exit()
-#include <string.h> // strlen()
+#include <fcntl.h>	// open()
+#include <unistd.h>	// write() read()..
+#include <stdlib.h>	// exit()
+#include <string.h>	// strlen()
 
 #define MAJOR_DEV_FILE_NAME "/dev/major_dev"
 
