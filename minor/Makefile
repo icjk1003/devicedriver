@@ -7,7 +7,7 @@ default: minor_app minor_driver
 minor_app:
 	gcc -o $@ minor_app.c
 minor_driver:
-	make -C $(KDIR) M=(PWD) modules
+	make -C $(KDIR) M=$(PWD) modules
 clean:
-	make -C $(KDIR) M=(PWD) clean
+	make -C $(KDIR) M=$(PWD) clean
 	rm minor_app
