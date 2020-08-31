@@ -95,7 +95,7 @@ static ssize_t minor2_write(struct file *file, const char *buf, size_t count, lo
       return err;
    }
 
-   printk("minor2_write -> buf: %s, count: %d, f_pos: %lld\n", buff, count, *f_pos);
+   printk("minor2_write -> buff: %s, count: %d, f_pos: %lld\n", buff, count, *f_pos);
 
    kfree(buff);
 
