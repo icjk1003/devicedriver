@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 		exit(1);
 	}
 
-	read(fd, buf, 0);
+	read(fd, buf, 20);
 	printf("read data: %s\n", buf);
 
 	write(fd, msg, strlen(msg)+1);

@@ -3,11 +3,9 @@
 #include <linux/kernel.h>
 #include <linux/fs.h>		// file_operations
 #include <linux/uaccess.h>	// copy_to_user()
-
+#include <linux/slab.h>		// kmalloc()
 #define MAJOR_DEV_NAME	"major_dev"
 #define MAJOR_DEV_NUM	200
-
-char *msg = "KERNEL DATA";
 
 static int major_open(struct inode *inode, struct file *file)
 {
@@ -26,22 +24,66 @@ static ssize_t major_close(struct inode *inode, struct file *file)
 static ssize_t major_read(struct file *file, char *buf, size_t count, loff_t *f_pos)
 {
 	int err;
+	char *buff;
 
-	err = copy_to_user(buf, msg, strlen(msg)+1);
+	buff = kmalloc(count, GFP_KERNEL);
+
+	if(buff == NULL)
+	{
+		printk("malloc error\n");
+
+		return 0;
+	}
+
+	sprintf(buff, "KERNEL DATA");
+
+	err = copy_to_user(buf, buff, count);
 
 	if(err != 0)
 	{
 		printk("copy_to_user error\n");
+
+		kfree(buff);
+
+		return err;
 	}
 
 	printk("major_read -> count: %d, f_pos: %lld\n", count, *f_pos);
+
+	kfree(buff);
 
 	return 0;
 }
 
 static ssize_t major_write(struct file *file, const char *buf, size_t count, loff_t *f_pos)
 {
-	printk("major_write -> buf: %s, count: %d, f_pos: %lld\n", buf, count, *f_pos);
+	char *buff;
+	int err;
+
+	buff = kmalloc(count, GFP_KERNEL);
+
+	if(buff == NULL)
+	{
+		printk("kmalloc error\n");
+
+		return 0;
+	}
+
+	err = copy_from_user(buff, buf, count);
+
+	if(err != 0)
+	{
+		printk("copy_from_user error\n");
+
+		kfree(buff);
+
+		return err;
+	}
+
+
+	printk("major_write -> buff: %s, count: %d, f_pos: %lld\n", buff, count, *f_pos);
+
+	kfree(buff);
 
 	return 0;
 }
