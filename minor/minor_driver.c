@@ -4,8 +4,8 @@
 #include <linux/fs.h>       // file_operations 포인터 함수
 #include <linux/uaccess.h>  // copy_to_user()
 
-#define MAJOR_DEV_NAME "major_dev"
-#define MAJOR 200
+#define MAJOR_DEV_NAME  "major_dev"
+#define MAJOR_DEV_NUM   200
 
 char *msg = "KERNEL DATA";
 
@@ -108,7 +108,7 @@ int minor_init(void)
    
    printk("minor_init\n");
    
-   err = register_chrdev(MAJOR, MAJOR_DEV_NAME, &major_fops);
+   err = register_chrdev(MAJOR_DEV_NUM, MAJOR_DEV_NAME, &major_fops);
    
    if(err < 0)
    {
@@ -124,7 +124,7 @@ void minor_exit(void)
 {
    printk("minor_exit\n");
    
-   unregister_chrdev(MAJOR, MAJOR_DEV_NAME);
+   unregister_chrdev(MAJOR_DEV_NUM, MAJOR_DEV_NAME);
 }
 
 module_init(minor_init);
