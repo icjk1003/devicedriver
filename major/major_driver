@@ -1,0 +1,11 @@
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#icnlude <linux/fs.h>
+#include <linux/uaccess.h>
+
+#define MAJOR_DEV_NAME	"major_dev"
+#define MJAOR_DEV_NUM	200
+
+char *msg = "KERNEL DATA";
+
