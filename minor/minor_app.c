@@ -3,42 +3,42 @@
 #include <unisdt.h>   // write() read() ..
 #include <stdlib.h>   // exit()
 #include <string.h>   // strlen()
-#define READ_DEVICE_FILE_NAME  "/dev/read_dev"
-#define WRITE_DEVICE_FILE_NAME "/dev/write_dev"
+#define MINOR1_DEV_FILE_NAME  "/dev/minor1_dev"
+#define MINOR2_DEV_FILE_NAME  "/dev/minor2_dev"
 
 char *msg = "USER DATA"
 
 int main()
 {
-   int read_dev;
-   int write_dev;
+   int minor1_fd;
+   int minor2_fd;
    
    char buf[1024];
    
-   read_dev = open(READ_DEVICE_FILE_NAME, O_RDWR);
+   minor1_fd = open(MINOR1_DEV_FILE_NAME, O_RDWR);
    
-   if(read_dev < 0)
+   if(minor1_fd < 0)
    {
-      printf("READ_DEVICE_FILE_NAME " open error\n");
+      printf(MINOR1_DEV_FILE_NAME " open error\n");
       exit(1);
    }
    
-   write_dev = open(WRITE_DEVICE_FILE_NAME, O_RDWR);
+   minor2_fd = open(MINOR2_DEV_FILE_NAME, O_RDWR);
    
-   if(write_dev < 0)
+   if(minor2_fd < 0)
    {
-      printf("WRITE_DEVICE_FILE_NAME " open error\n");
-      close(read_dev);
+      printf(MINOR2_DEV_FILE_NAME " open error\n");
+      close(minor1_fd);
       exit(1);
    }
    
-   read(read_dev, buf, 0);
+   read(minor1_fd, buf, 0);
    printf("read data: %s\n", buf);
    
-   write(write_dev, msg, strlen(msg)+1);
+   write(minor2_fd, msg, strlen(msg)+1);
    
-   close(read_dev);
-   close(write_dev);
+   close(minor1_fd);
+   close(minor2_fd);
    
    return 0;
 }
