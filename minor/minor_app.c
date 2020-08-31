@@ -36,8 +36,9 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   read(minor1_fd, buf, 0);
+   read(minor1_fd, buf, 20);
    printf("read data: %s\n", buf);
+
 
    write(minor2_fd, msg, strlen(msg)+1);
 

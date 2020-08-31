@@ -1,0 +1,1 @@
+cmd_/home/pi/Downloads/devicedriver/minor/minor_driver.ko := ld -r  -EL -T ./scripts/module-common.lds -T ./arch/arm/kernel/module.lds  --build-id  -o /home/pi/Downloads/devicedriver/minor/minor_driver.ko /home/pi/Downloads/devicedriver/minor/minor_driver.o /home/pi/Downloads/devicedriver/minor/minor_driver.mod.o ;  true
