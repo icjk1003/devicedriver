@@ -7,11 +7,13 @@
 #define GPIO_BASE 0x3F200000
 #define GPIO_SIZE 180
 
-#define GPIO_IN(g)	(*(gpio+((g)/10)) &= ~(7<<(((g)%10)*3)))
-#define GPIO_OUT(g)	(*(gpio+((g)/10)) |= (1<<(((g)%10)*3)))
-#define GPIO_SET(g)	(*(gpio+7) = 1<<g)
-#define GPIO_CLR(g)	(*(gpio+10) = 1<<g)
-#define GPIO_GET(g)	(*(gpio+13)&(1<<g))
+#define GPIO_IN(g)	(*(gpio + (g / 10)) &= ~(7 << ((g % 10) * 3)))
+#define GPIO_OUT(g)	(*(gpio + (g / 10)) |= ( 1 << ((g % 10) * 3)))
+#define GPIO_SET(g)	(*(gpio + 7) = 1 << g)
+#define GPIO_CLR(g)	(*(gpio + 10) = 1 << g)
+#define GPIO_GET(g)	(*(gpio + 13) & (1 << g))
+
+#define MEM_DEV_FILE_NAME "/dev/mem"
 
 volatile unsigned *gpio;
 
@@ -29,9 +31,11 @@ int main(int argc, char **argv)
 
    gno = atoi(argv[1]);
 
-   if( ( mem_fd = open("/dev/mem", O_RDWR | O_SYNC) ) < 0)
+   mem_fd = open(MEM_DEV_FILE_NAME, O_RDWR | O_SYNC);
+
+   if(mem_fd < 0)
    {
-      perror("open() /dev/mem\n");
+      printf(MEM_DEV_FILE_NAME " open error");
 
       return -1;
    }
@@ -40,9 +44,9 @@ int main(int argc, char **argv)
 
    if(gpio_map == MAP_FAILED)
    {
-      printf("[Error] mmap() : %d\n", (int)gpio_map);
+      printf("mmap error");
 
-      perror -1;
+      return -1;
    }
 
    gpio = (volatile unsigned*)gpio_map;
@@ -59,6 +63,7 @@ int main(int argc, char **argv)
    }
 
    munmap(gpio_map, GPIO_SIZE);
+
    close(mem_fd);
 
    return 0;
