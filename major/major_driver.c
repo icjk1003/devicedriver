@@ -4,6 +4,7 @@
 #include <linux/fs.h>		// file_operations
 #include <linux/uaccess.h>	// copy_to_user()
 #include <linux/slab.h>		// kmalloc()
+
 #define MAJOR_DEV_NAME	"major_dev"
 #define MAJOR_DEV_NUM	200
 
@@ -126,4 +127,3 @@ module_exit(major_exit);
 
 MODULE_AUTHOR("icjk1003@gmail.com");
 MODULE_LICENSE("GPL");
-
