@@ -7,6 +7,4 @@
 #define GPIO_CLR(g)	(*(gpio + 10) = 1 << g)
 #define GPIO_GET(g)	(*(gpio + 13) & (1 << g))
 
-
 volatile unsigned *gpio;
-
