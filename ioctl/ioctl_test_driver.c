@@ -1,11 +1,10 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
-#include <linux/fs.h>		// file_operations
-#include <linux/uaccess.h>	// copy_to_user()
-#include <linux/slab.h>		// kmalloc()
-#include <asm/io.h>
-
+#include <linux/fs.h>
+#include <linux/uaccess.h>
+#include <linux/slab.h>
+#include <linux/io.h>
 
 #include "ioctl_test.h"
 #include "ioctl_test_gpio.h"
@@ -47,17 +46,13 @@ static ssize_t ioctl_test_close(struct inode *inode, struct file *file)
 
 static long ioctl_test_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
-	int err;
+	int err, size;
 
 	ioctl_test_info led_info;
 
 	printk("ioctl_test_ioctl\n");
 
 
-	//int err, size;
-
-
-/*
 
 	if(_IOC_TYPE(cmd) != IOCTL_TEST_MAGIC)
 	{
@@ -77,19 +72,19 @@ static long ioctl_test_ioctl(struct file *file, unsigned int cmd, unsigned long 
 
 		if(_IOC_DIR(cmd) & _IOC_READ)
 		{
-			err = verify_area(VERIFY_WRITE, (void *) arg, size);
+			err = access_ok(VERIFY_WRITE, (void *) arg, size);
 		}
 		else if(_IOC_DIR(cmd) & _IOC_WRITE)
 		{
-			err = verify_area(VERIFY_READ, (void *) arg, size);
+			err = access_ok(VERIFY_READ, (void *) arg, size);
 		}
 
-		if(err)
+		if(!err)
 		{
 			return err;
 		}
 	}
-*/
+
 
 	switch(cmd)
 	{

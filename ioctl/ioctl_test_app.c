@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <fcntl.h>	// open()
-#include <unistd.h>	// write() read()..
-#include <stdlib.h>	// exit()
-#include <string.h>	// strlen()
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 
 #include "ioctl_test.h"
